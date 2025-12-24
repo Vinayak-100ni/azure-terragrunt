@@ -7,12 +7,3 @@ variable "environment" {
   description = "The environment for the Resource Group"
   type        = string
 }
-
-variable "address_space" {
-  type = list(string)
-}
-
-
-variable "subnet_prefix" {
-  type = list(string)
-}

@@ -1,5 +1,23 @@
-# Terraform
+# Local Terraform directories
 .terraform/
-*.tfstate
-*.tfstate.*
 .terraform.lock.hcl
+
+# Terragrunt generated files
+*/.terragrunt-cache/
+
+# Crash log files
+crash.log
+
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / editor files
+*.swp
+*.idea/
+*.vscode/
+
+# Backup / temp files
+*.bak
+*.backup
