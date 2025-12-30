@@ -25,4 +25,3 @@ variable "address_space" {
   type = list(string)
 }
 
-

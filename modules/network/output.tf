@@ -1,12 +1,11 @@
-output "aks_subnet_id" {
-  description = "The ID of the AKS subnet"
-  value       = azurerm_subnet.subnets["aks"].id
+output "subnet_ids" {
+  description = "Map of subnet names to IDs"
+  value = {
+    for key, subnet in azurerm_subnet.subnets :
+    "${var.environment}-${key}" => subnet.id
+  }
 }
 
-output "mysql_subnet_id" {
-  description = "The ID of the MySQL subnet"
-  value       = azurerm_subnet.subnets["mysql"].id
-}
 
 output "vnet_id" {
   description = "The ID of the Virtual Network"
