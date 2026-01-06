@@ -28,15 +28,30 @@ dependency "network" {
 
  }
 
+# dependency "acr" {
+#   config_path = "../acr"
+
+#   mock_outputs = {
+#     acr_ids = {
+#       acr = "00000000-0000-0000-0000-000000000000"
+#     }
+#   }
+# }
+
+
 dependency "acr" {
   config_path = "../acr"
 
   mock_outputs = {
     acr_ids = {
-      acr = "00000000-0000-0000-0000-000000000000"
+      acr = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/mock-rg/providers/Microsoft.ContainerRegistry/registries/mockacr"
     }
   }
+
+  mock_outputs_allowed_terraform_commands = ["plan"]
 }
+
+
 
 inputs = {
   rgname       = dependency.rg.outputs.rgname
