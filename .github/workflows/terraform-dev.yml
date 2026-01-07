@@ -35,8 +35,16 @@ jobs:
 
       - name: Terragrunt init
         working-directory: dev
-        run: terragrunt run -all init 
+        run: terragrunt run-all init \
+             -var="client_id=${{ fromJSON(secrets.AZURE_CREDENTIALS).clientId }}" \
+             -var="client_secret=${{ fromJSON(secrets.AZURE_CREDENTIALS).clientSecret }}" \
+             -var="tenant_id=${{ fromJSON(secrets.AZURE_CREDENTIALS).tenantId }}" \
+             -var="subscriptionId=${{ fromJSON(secrets.AZURE_CREDENTIALS).subscriptionId }}" 
         
       - name: Terragrunt Run-All Plan
         working-directory: dev
-        run: terragrunt run-all plan 
+        run: terragrunt run-all plan \
+             -var="client_id=${{ fromJSON(secrets.AZURE_CREDENTIALS).clientId }}" \
+             -var="client_secret=${{ fromJSON(secrets.AZURE_CREDENTIALS).clientSecret }}" \
+             -var="tenant_id=${{ fromJSON(secrets.AZURE_CREDENTIALS).tenantId }}" \
+             -var="subscriptionId=${{ fromJSON(secrets.AZURE_CREDENTIALS).subscriptionId }}" 
