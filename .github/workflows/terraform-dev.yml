@@ -35,16 +35,19 @@ jobs:
 
       - name: Terragrunt init
         working-directory: dev
-        run: terragrunt run-all init \
-             -var="client_id=${{ fromJSON(secrets.AZURE_CREDENTIALS).clientId }}" \
-             -var="client_secret=${{ fromJSON(secrets.AZURE_CREDENTIALS).clientSecret }}" \
-             -var="tenant_id=${{ fromJSON(secrets.AZURE_CREDENTIALS).tenantId }}" \
-             -var="subscriptionId=${{ fromJSON(secrets.AZURE_CREDENTIALS).subscriptionId }}" 
+        env:
+          CLIENT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).clientId }}
+          CLIENT_SECRET: ${{ fromJSON(secrets.AZURE_CREDENTIALS).clientSecret }}
+          TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).tenantId }}
+          SUBSCRIPTION_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).subscriptionId }}
+        run: terragrunt run-all init  
         
       - name: Terragrunt Run-All Plan
         working-directory: dev
-        run: terragrunt run-all plan \
-             -var="client_id=${{ fromJSON(secrets.AZURE_CREDENTIALS).clientId }}" \
-             -var="client_secret=${{ fromJSON(secrets.AZURE_CREDENTIALS).clientSecret }}" \
-             -var="tenant_id=${{ fromJSON(secrets.AZURE_CREDENTIALS).tenantId }}" \
-             -var="subscriptionId=${{ fromJSON(secrets.AZURE_CREDENTIALS).subscriptionId }}" 
+        env:
+          CLIENT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).clientId }}
+          CLIENT_SECRET: ${{ fromJSON(secrets.AZURE_CREDENTIALS).clientSecret }}
+          TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).tenantId }}
+          SUBSCRIPTION_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).subscriptionId }}
+        run: terragrunt run-all plan
+        
