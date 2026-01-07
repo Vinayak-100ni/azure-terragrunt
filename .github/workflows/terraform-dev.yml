@@ -40,7 +40,7 @@ jobs:
           CLIENT_SECRET: ${{ fromJSON(secrets.AZURE_CREDENTIALS).clientSecret }}
           TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).tenantId }}
           SUBSCRIPTION_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).subscriptionId }}
-        run: terragrunt run-all init  
+        run: terragrunt run -all init  
         
       - name: Terragrunt Run-All Plan
         working-directory: dev
@@ -49,5 +49,5 @@ jobs:
           CLIENT_SECRET: ${{ fromJSON(secrets.AZURE_CREDENTIALS).clientSecret }}
           TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).tenantId }}
           SUBSCRIPTION_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).subscriptionId }}
-        run: terragrunt run-all plan
+        run: terragrunt run -all plan
         
