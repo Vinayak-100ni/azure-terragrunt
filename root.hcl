@@ -34,7 +34,10 @@ generate "providers" {
   contents = <<EOF
   provider "azurerm" {
   features {}
-  subscription_id = "${local.subscription_id}"
+  subscription_id = var.subscriptionId
+  client_id       = var.client_id
+  client_secret   = var.client_secret
+  tenant_id       = var.tenant_id
 }
 EOF
 }
@@ -102,4 +105,5 @@ terraform {
 #     "-var-file=${dirname(get_terragrunt_dir())}/${local.environment}.tfvars"
 #   ]
 # }
+
 # }
