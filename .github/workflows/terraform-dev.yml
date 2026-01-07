@@ -35,8 +35,8 @@ jobs:
 
       - name: Terragrunt init
         working-directory: dev
-        run: terragrunt run -all init --terragrunt-non-interactive
+        run: terragrunt run -all init 
         
       - name: Terragrunt Run-All Plan
         working-directory: dev
-        run: terragrunt run-all plan --terragrunt-non-interactive
+        run: terragrunt run-all plan 
