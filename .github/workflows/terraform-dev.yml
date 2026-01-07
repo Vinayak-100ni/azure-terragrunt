@@ -1,39 +1,28 @@
-name: Terraform Plan (Dev)
+name: Terraform Dev
 
 on:
   push:
-    branches: [ "dev" ]
-  pull_request:
-    branches: [ "main" ]
-
-permissions:
-  id-token: write
-  contents: read
+    branches:
+      - dev
 
 jobs:
-  terraform-plan:
+  terraform:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Azure Login (OIDC)
+      - name: Azure Login
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-
-      - name: Export ARM env vars
-        run: |
-          echo "ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "ARM_TENANT_ID=${{ secrets.AZURE_TENANT_ID }}" >> $GITHUB_ENV
-          echo "ARM_SUBSCRIPTION_ID=${{ secrets.AZURE_SUBSCRIPTION_ID }}" >> $GITHUB_ENV
-          echo "ARM_USE_OIDC=true" >> $GITHUB_ENV
+          client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
 
       - name: Terraform Init
         run: terraform init
 
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -var-file=./dev.tfvars
