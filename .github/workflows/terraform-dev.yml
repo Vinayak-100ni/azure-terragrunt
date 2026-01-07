@@ -6,7 +6,8 @@ on:
       - dev
 
 permissions:
-  contents: read
+  id-token: write   # REQUIRED for OIDC
+  contents: read    # REQUIRED for checkout
 
 jobs:
   terragrunt:
@@ -16,10 +17,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Azure Login (Service Principal Secret)
+      - name: Azure Login (OIDC)
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}   # App Registration client ID
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}   # Your Azure AD tenant
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          auth-type: oidc
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -35,19 +39,8 @@ jobs:
 
       - name: Terragrunt init
         working-directory: dev
-        env:
-          CLIENT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).clientId }}
-          CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-          TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).tenantId }}
-          SUBSCRIPTION_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).subscriptionId }}
-        run: terragrunt run -all init  
-        
-      - name: Terragrunt Run-All Plan
+        run: terragrunt run -all init 
+
+      - name: Terragrunt plan
         working-directory: dev
-        env:
-          CLIENT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).clientId }}
-          CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-          TENANT_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).tenantId }}
-          SUBSCRIPTION_ID: ${{ fromJSON(secrets.AZURE_CREDENTIALS).subscriptionId }}
-        run: terragrunt run -all plan
-        
+        run: terragrunt run -all plan 
