@@ -47,7 +47,7 @@ terraform {
     commands = ["plan", "apply", "destroy"]
 
     arguments = [
-      "-var-file=${dirname(get_original_terragrunt_dir())}/${local.environment}.tfvars"
+      "-var-file=${dirname(get_original_terragrunt_dir())}/${local.environment}.tfvars",
       "-var=client_id=${get_env("CLIENT_ID")}",
       "-var=client_secret=${get_env("CLIENT_SECRET")}",
       "-var=tenant_id=${get_env("TENANT_ID")}",
@@ -111,4 +111,5 @@ terraform {
 # }
 
 # }
+
 
